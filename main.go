@@ -7,6 +7,7 @@ import (
 	"strings"
    // "encoding/json"
    "io"
+   "strconv"
    log "github.com/sirupsen/logrus"
 
 
@@ -20,6 +21,11 @@ type Content struct {
 }
 
 func main() {
+	var request_nr int
+	f, err := os.OpenFile("log.txt", os.O_WRONLY | os.O_CREATE, 0755)
+if err != nil {
+}
+log.SetOutput(f)
 	router := gin.Default()
 
 
@@ -35,7 +41,8 @@ func main() {
 
 		body, _ := io.ReadAll(ctx.Request.Body)
 
-
+		log.Println("request no",strconv.Itoa(request_nr))
+		request_nr=request_nr + 1
 		var content  string
 		content=ctx.Query("validationToken")
 
@@ -43,7 +50,8 @@ func main() {
 
 	   if len(content)>81 {
 
-	   ctx.Data(http.StatusOK,"text/plain; charset=utf-8", []byte(content[81:len(content)]))
+		log.Println("query",string(content))
+	   ctx.Data(http.StatusOK,"text/plain; charset=utf-8", []byte(content))
 	   } else {
 		
 		ctx.JSON(http.StatusOK, "no content length")
