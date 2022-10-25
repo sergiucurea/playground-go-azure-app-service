@@ -16,7 +16,7 @@ func main() {
 	router.LoadHTMLGlob("templates/*")
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"title": "Hello from Go and Gin running on Azure App Service",
+			"title": "Hello from Go and Gin running on Azure App Service Demo",
 			"link":  "/json",
 		})
 	})
