@@ -42,7 +42,7 @@ func main() {
 
 	   if len(content)>81 {
 
-	   ctx.JSON(http.StatusOK, content[81:len(content)])
+	   ctx.Data(http.StatusOK,"text/plain; charset=utf-8", []byte(content[81:len(content)]))
 	   } else {
 		
 		ctx.JSON(http.StatusOK, "no content length")
