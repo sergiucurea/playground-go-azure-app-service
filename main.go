@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	// "encoding/json"
+   // "encoding/json"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/fsnotify.v1"
@@ -28,11 +28,26 @@ func main() {
 	})
 
 	router.POST("/test", func(ctx *gin.Context) {
-		var content  string
-		 content=ctx.Query("validationToken")
-		fmt.Println("content",content)
+		var body map[string]interface{}
 
-		ctx.JSON(http.StatusOK, content[81:len(content)])
+		if err := ctx.BindJSON(&body); err != nil {
+			ctx.JSON(http.StatusOK, "error")
+			return
+		}
+
+		var content  string
+		content=ctx.Query("validationToken")
+
+	   fmt.Println("body",body)
+
+	   if len(content)>81 {
+
+	   ctx.JSON(http.StatusOK, content[81:len(content)])
+	   } else {
+		
+		ctx.JSON(http.StatusOK, "no content length")
+
+	   }
 	})
 
 	router.GET("/json", func(ctx *gin.Context) {
