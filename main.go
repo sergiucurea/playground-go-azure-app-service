@@ -5,10 +5,16 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	// "encoding/json"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/fsnotify.v1"
 )
+
+type Content struct {
+    test string
+  
+}
 
 func main() {
 	router := gin.Default()
@@ -21,9 +27,17 @@ func main() {
 		})
 	})
 
+	router.POST("/test", func(ctx *gin.Context) {
+		var content  string
+		 content=ctx.Query("validationToken")
+		fmt.Println("content",content)
+
+		ctx.JSON(http.StatusOK, content[81:len(content)])
+	})
+
 	router.GET("/json", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
-			"foo": "bar",
+			"foo": "baaa",
 		})
 	})
 
