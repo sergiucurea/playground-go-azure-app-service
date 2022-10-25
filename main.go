@@ -30,10 +30,7 @@ func main() {
 	router.POST("/test", func(ctx *gin.Context) {
 		var body map[string]interface{}
 
-		if err := ctx.BindJSON(&body); err != nil {
-			ctx.JSON(http.StatusOK, "error")
-			return
-		}
+	 	 ctx.BindJSON(&body);
 
 		var content  string
 		content=ctx.Query("validationToken")
