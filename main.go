@@ -6,7 +6,9 @@ import (
 	"os"
 	"strings"
    // "encoding/json"
-   "log"
+   "io"
+   log "github.com/sirupsen/logrus"
+
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/fsnotify.v1"
@@ -20,6 +22,7 @@ type Content struct {
 func main() {
 	router := gin.Default()
 
+
 	router.LoadHTMLGlob("templates/*")
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "index.tmpl", gin.H{
@@ -29,14 +32,14 @@ func main() {
 	})
 
 	router.POST("/test", func(ctx *gin.Context) {
-		var body map[string]interface{}
 
-	 	 ctx.BindJSON(&body);
+		body, _ := io.ReadAll(ctx.Request.Body)
+
 
 		var content  string
 		content=ctx.Query("validationToken")
 
-	   log.Println("body",body)
+		log.Println("body",string(body))
 
 	   if len(content)>81 {
 
