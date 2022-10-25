@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
    // "encoding/json"
+   "log"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/fsnotify.v1"
@@ -35,7 +36,7 @@ func main() {
 		var content  string
 		content=ctx.Query("validationToken")
 
-	   fmt.Println("body",body)
+	   log.Println("body",body)
 
 	   if len(content)>81 {
 
